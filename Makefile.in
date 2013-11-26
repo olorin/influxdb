@@ -48,6 +48,16 @@ CGO_CFLAGS  += -I$(leveldb_dir)/include
 CGO_LDFLAGS += $(leveldb_dir)/libleveldb.a $(snappy_dir)/.libs/libsnappy.a -lstdc++
 export CGO_CFLAGS
 export CGO_LDFLAGS
+else
+CGO_LDFLAGS -lleveldb -lsnappy -lstdc++
+export CGO_LDFLAGS
+endif
+
+ifneq ($(uname_S),Linux)
+ifeq ($(PYTHONPATH),)
+PYTHONPATH = $(addprefix /usr/local/lib/python2.7/site-packages/:,$(PYTHONPATH))
+export PYTHONPATH
+endif
 endif
 
 $(snappy_deps):
