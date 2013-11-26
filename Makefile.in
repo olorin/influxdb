@@ -43,10 +43,12 @@ leveldb_file    = leveldb-$(leveldb_version).tar.gz
 leveldb_deps    = $(leveldb_dir)/libleveldb.a
 
 # levigo flags
+ifeq ($(uname_S),Linux)
 CGO_CFLAGS  += -I$(leveldb_dir)/include
 CGO_LDFLAGS += $(leveldb_dir)/libleveldb.a $(snappy_dir)/.libs/libsnappy.a -lstdc++
 export CGO_CFLAGS
 export CGO_LDFLAGS
+endif
 
 $(snappy_deps):
 ifeq ($(uname_S),Linux)
